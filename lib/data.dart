@@ -79,7 +79,7 @@ class AppDatabase {
           name: 'Olivia',
           imageFileName: 'story_6.jpg',
           iconFileName: 'category_1.png',
-          isViewed: false),
+          isViewed: true),
       StoryData(
           id: 1007,
           name: 'Amelia',

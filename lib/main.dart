@@ -1,3 +1,5 @@
+import 'package:blog_club/data.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Blog Club',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textButtonTheme: const TextButtonThemeData(
             style: ButtonStyle(
@@ -62,13 +65,13 @@ class MyApp extends StatelessWidget {
             titleSmall: TextStyle(
                 fontFamily: fontFamilyDefualt,
                 color: secondryTextColor,
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.w400,
                 fontSize: 18),
             headlineLarge: TextStyle(
                 color: primaryTextColor,
                 fontFamily: fontFamilyDefualt,
                 fontSize: 24,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.w900),
             bodySmall: TextStyle(
                 color: secondryTextColor,
                 fontFamily: fontFamilyDefualt,
@@ -104,6 +107,159 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    ThemeData themeData = Theme.of(context);
+    final stories = AppDatabase.stories;
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(32, 16, 0, 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 32),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Hi, Jonathan!',
+                        style: themeData.textTheme.titleSmall,
+                      ),
+                      Image.asset(
+                        'assets/images/icons/notification.png',
+                        width: 32,
+                        height: 32,
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 32, 16),
+                  child: Text(
+                    'Explore today’s',
+                    style: themeData.textTheme.headlineLarge,
+                  ),
+                ),
+                _Stories(stories: stories, themeData: themeData)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Stories extends StatelessWidget {
+  const _Stories({
+    required this.stories,
+    required this.themeData,
+  });
+
+  final List<StoryData> stories;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 110,
+      child: ListView.builder(
+        itemCount: stories.length,
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(right: 16),
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          final story = stories[index];
+          return _Story(story: story, themeData: themeData);
+        },
+      ),
+    );
+  }
+}
+
+class _Story extends StatelessWidget {
+  const _Story({
+    required this.story,
+    required this.themeData,
+  });
+
+  final StoryData story;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Stack(
+          children: [
+            story.isViewed ? _profileImageVisited() : _profileImageNotVisited(),
+            Positioned(
+                bottom: 0,
+                right: 0,
+                child: Image.asset(
+                  'assets/images/icons/${story.iconFileName}',
+                  width: 28,
+                  height: 28,
+                ))
+          ],
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Text(
+          story.name,
+          style: themeData.textTheme.bodySmall,
+        )
+      ],
+    );
+  }
+
+  Widget _profileImageNotVisited() {
+    return Container(
+      margin: EdgeInsets.all(4),
+      width: 68,
+      height: 68,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          gradient: const LinearGradient(begin: Alignment.topLeft, colors: [
+            Color(0xff376AED),
+            Color(0xff49B0E2),
+            Color(0xff9CECFB)
+          ])),
+      child: Container(
+        margin: EdgeInsets.all(2.5),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22), color: Colors.white),
+        padding: EdgeInsets.all(4),
+        child: _profileImage(),
+      ),
+    );
+  }
+
+  Widget _profileImageVisited() {
+    return Container(
+      margin: EdgeInsets.all(4),
+      width: 67,
+      height: 67,
+      child: DottedBorder(
+        borderType: BorderType.RRect,
+        strokeWidth: 2,
+        dashPattern: [8, 3],
+        color: const Color(0xff7B8BB2),
+        radius: const Radius.circular(24),
+        padding: const EdgeInsets.all(6),
+        child: Container(
+          child: _profileImage(),
+        ),
+      ),
+    );
+  }
+
+  Widget _profileImage() {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset('assets/images/stories/${story.imageFileName}'));
   }
 }
