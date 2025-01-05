@@ -1,3 +1,4 @@
+import 'package:blog_club/carousel/carousel_slider.dart';
 import 'package:blog_club/data.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -112,41 +113,135 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(32, 16, 0, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 32),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Hi, Jonathan!',
-                        style: themeData.textTheme.titleSmall,
-                      ),
-                      Image.asset(
-                        'assets/images/icons/notification.png',
-                        width: 32,
-                        height: 32,
-                      )
-                    ],
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 32, left: 32, top: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Hi, Jonathan!',
+                      style: themeData.textTheme.titleSmall,
+                    ),
+                    Image.asset(
+                      'assets/images/icons/notification.png',
+                      width: 32,
+                      height: 32,
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 32, 16),
-                  child: Text(
-                    'Explore today’s',
-                    style: themeData.textTheme.headlineLarge,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32, 8, 32, 16),
+                child: Text(
+                  'Explore today’s',
+                  style: themeData.textTheme.headlineLarge,
                 ),
-                _Stories(stories: stories, themeData: themeData)
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 32),
+                child: _Stories(stories: stories, themeData: themeData),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              _CategoryList()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CategoryList extends StatelessWidget {
+  const _CategoryList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = AppDatabase.categories;
+    return CarouselSlider.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index, realIndex) {
+          return _CategoryItem(
+              left: realIndex == 0 ? 32 : 8,
+              right: realIndex == categories.length - 1 ? 32 : 8,
+              category: categories[realIndex]);
+        },
+        options: CarouselOptions(
+            scrollDirection: Axis.horizontal,
+            viewportFraction: 0.8,
+            aspectRatio: 1.2,
+            enableInfiniteScroll: false,
+            enlargeCenterPage: true,
+            scrollPhysics: const BouncingScrollPhysics(),
+            enlargeStrategy: CenterPageEnlargeStrategy.height,
+            disableCenter: true));
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final double left;
+  final double right;
+  final Category category;
+  const _CategoryItem({
+    super.key,
+    required this.category,
+    required this.left,
+    required this.right,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(left, 0, right, 0),
+      child: Stack(children: [
+        Positioned.fill(
+          top: 100,
+          right: 65,
+          left: 65,
+          bottom: 24,
+          child: Container(
+            decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromARGB(119, 13, 37, 60), blurRadius: 20)
               ],
             ),
           ),
         ),
-      ),
+        Positioned.fill(
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+            decoration: BoxDecoration(
+                color: Colors.orange, borderRadius: BorderRadius.circular(24)),
+            foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                gradient: const LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.center,
+                    colors: [Color(0xff0D253C), Colors.transparent])),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Image.asset(
+                'assets/images/posts/large/${category.imageFileName}',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+            bottom: 48,
+            left: 56,
+            child: Text(
+              category.title,
+              style: Theme.of(context).textTheme.labelSmall,
+            ))
+      ]),
     );
   }
 }
