@@ -1,6 +1,6 @@
 import 'package:blog_club/data.dart';
 import 'package:blog_club/gen/assets.gen.dart';
-import 'package:blog_club/screens/home_screen.dart';
+import 'package:blog_club/screens/auth_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -115,12 +115,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               if (page == items.length - 1) {
                                 Navigator.of(context)
                                     .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
+                                  builder: (context) => AuthScreen(),
                                 ));
                               } else {
                                 _pageController.animateToPage(page+1,
                                     duration: Duration(milliseconds: 500),
-                                    curve: Curves.easeInToLinear);
+                                    curve: Curves.easeIn);
                               }
                             },
                             child: Icon(

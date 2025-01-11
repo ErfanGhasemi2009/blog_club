@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontSize: 14),
         ))),
+        
         colorScheme: const ColorScheme.light(
           primary: primaryColor,
           onPrimary: Colors.white,

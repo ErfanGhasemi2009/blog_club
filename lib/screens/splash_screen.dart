@@ -1,7 +1,5 @@
 import 'package:blog_club/gen/assets.gen.dart';
-import 'package:blog_club/screens/home_screen.dart';
 import 'package:blog_club/screens/onboarding_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
