@@ -1,3 +1,4 @@
+import 'package:blog_club/screens/article_screen.dart';
 import 'package:blog_club/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
             color: Theme.of(context).colorScheme.surface,
             titleSpacing: 32,
+            elevation: 0,
             foregroundColor: Theme.of(context).colorScheme.onBackground),
         snackBarTheme: const SnackBarThemeData(
           backgroundColor: primaryColor,
@@ -108,7 +110,7 @@ class MyApp extends StatelessWidget {
       //     )
       //   ],
       // ),
-      home: SplashScreen(),
+      home: ArticleScreen(),
     
     );
   }
