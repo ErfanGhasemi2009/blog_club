@@ -1,4 +1,5 @@
 import 'package:blog_club/screens/article_screen.dart';
+import 'package:blog_club/screens/profile_screen.dart';
 import 'package:blog_club/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -110,7 +111,7 @@ class MyApp extends StatelessWidget {
       //     )
       //   ],
       // ),
-      home: ArticleScreen(),
+      home: ProfileScreen(),
     
     );
   }

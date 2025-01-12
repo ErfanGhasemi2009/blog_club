@@ -2,11 +2,11 @@ import 'package:blog_club/carousel/carousel_slider.dart';
 import 'package:blog_club/data.dart';
 import 'package:blog_club/gen/assets.gen.dart';
 import 'package:blog_club/main.dart';
+import 'package:blog_club/screens/article_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              _PostList(),
+              PostList(),
               SizedBox(
                 height: 32,
               )
@@ -280,8 +280,10 @@ class _Story extends StatelessWidget {
   }
 }
 
-class _PostList extends StatelessWidget {
+class PostList extends StatelessWidget {
   final posts = AppDatabase.posts;
+
+  PostList({super.key});
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -291,14 +293,21 @@ class _PostList extends StatelessWidget {
       physics: ClampingScrollPhysics(),
       itemBuilder: (context, index) {
         final post = posts[index];
-        return _Post(post: post);
+        return InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ArticleScreen(),
+              ));
+            },
+            child: Post(post: post));
       },
     );
   }
 }
 
-class _Post extends StatelessWidget {
-  const _Post({
+class Post extends StatelessWidget {
+  const Post({
+    super.key,
     required this.post,
   });
 
