@@ -1,5 +1,5 @@
 import 'package:blog_club/gen/assets.gen.dart';
-import 'package:blog_club/screens/home_screen.dart';
+import 'package:blog_club/main.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -273,7 +273,7 @@ class _ElavetedButtonLoginSignUp extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => const MainScreen()));
           },
           child: Text(bottomLabel.toUpperCase())),
     );

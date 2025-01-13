@@ -151,6 +151,41 @@ class AppDatabase {
     }
     return items;
   }
+
+  static List<OnStoryItem> get onStoryItems {
+    return [
+      OnStoryItem(
+          'Live A Happy Life? Smile.',
+          'I’m one of those people who always smiles. save them in the application and share them with your loved ones.',
+          StoryData(
+              id: 1001,
+              name: 'Emilia',
+              imageFileName: 'story_9.jpg',
+              iconFileName: 'category_1.png',
+              isViewed: false),
+          'on_story.jpg'),
+      OnStoryItem(
+          'Do You Want To Live A Happy Life? Smile.',
+          'Sometimes there’s no reason to smile, but I’ll smile anyway because of life. Yes, I’m one of those people who always smiles.',
+          StoryData(
+              id: 1002,
+              name: 'Jasmine',
+              imageFileName: 'story_4.jpg',
+              iconFileName: 'category_1.png',
+              isViewed: false),
+          'on_story.jpg'),
+      OnStoryItem(
+          'save them in the application and share them with your loved ones.',
+          'Sometimes there’s no reason to smile,save them in the application and share them with your loved ones.',
+          StoryData(
+              id: 1001,
+              name: 'Emilia',
+              imageFileName: 'story_9.jpg',
+              iconFileName: 'category_1.png',
+              isViewed: false),
+          'on_story.jpg'),
+    ];
+  }
 }
 
 class OnBoardingItem {
@@ -158,4 +193,13 @@ class OnBoardingItem {
   final String description;
 
   OnBoardingItem(this.title, this.description);
+}
+
+class OnStoryItem {
+  final String title;
+  final String description;
+  final StoryData storyData;
+  final String imagePath;
+
+  OnStoryItem(this.title, this.description, this.storyData, this.imagePath);
 }

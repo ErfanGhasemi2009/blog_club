@@ -3,6 +3,7 @@ import 'package:blog_club/data.dart';
 import 'package:blog_club/gen/assets.gen.dart';
 import 'package:blog_club/main.dart';
 import 'package:blog_club/screens/article_screen.dart';
+import 'package:blog_club/screens/stroy_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -206,29 +207,38 @@ class _Story extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            story.isViewed ? _profileImageVisited() : _profileImageNotVisited(),
-            Positioned(
-                bottom: 0,
-                right: 0,
-                child: Image.asset(
-                  'assets/images/icons/${story.iconFileName}',
-                  width: 28,
-                  height: 28,
-                ))
-          ],
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(
-          story.name,
-          style: themeData.textTheme.bodySmall,
-        )
-      ],
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => StoryScreen(),
+        ));
+      },
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              story.isViewed
+                  ? _profileImageVisited()
+                  : _profileImageNotVisited(),
+              Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Image.asset(
+                    'assets/images/icons/${story.iconFileName}',
+                    width: 28,
+                    height: 28,
+                  ))
+            ],
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            story.name,
+            style: themeData.textTheme.bodySmall,
+          )
+        ],
+      ),
     );
   }
 
